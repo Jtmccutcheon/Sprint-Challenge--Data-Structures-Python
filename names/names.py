@@ -1,4 +1,5 @@
 import time
+from binary_search_tree import BinarySearchTree
 
 start_time = time.time()
 
@@ -11,14 +12,30 @@ names_2 = f.read().split("\n")  # List containing 10000 names
 f.close()
 
 duplicates = []
-for name_1 in names_1:
-    for name_2 in names_2:
-        if name_1 == name_2:
-            duplicates.append(name_1)
+
+bst = BinarySearchTree(names_1[0])
+
+# loop through names_1 and add them all to binary search tree
+for name in names_1[1:]:
+    bst.insert(name)
+
+# loop through names_2
+for name2 in names_2:
+    # check if name is already in our bst
+    if bst.contains(name2):
+        # if so add to duplicates list
+        duplicates.append(name2)
+
+# get this O(n^2) outta here
+# duplicates = []
+# for name_1 in names_1:
+#     for name_2 in names_2:
+#         if name_1 == name_2:
+#             duplicates.append(name_1)
 
 end_time = time.time()
-print (f"{len(duplicates)} duplicates:\n\n{', '.join(duplicates)}\n\n")
-print (f"runtime: {end_time - start_time} seconds")
+print(f"{len(duplicates)} duplicates:\n\n{', '.join(duplicates)}\n\n")
+print(f"runtime: {end_time - start_time} seconds")
 
 # ---------- Stretch Goal -----------
 # Python has built-in tools that allow for a very efficient approach to this problem
